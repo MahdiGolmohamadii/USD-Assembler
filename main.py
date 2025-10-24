@@ -2,6 +2,7 @@ import sys
 from PyQt6 import QtWidgets
 
 import usd_utils
+from widgets.file_browser import FileBrowser
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -46,13 +47,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if file_dialog.exec():
             selected_files = file_dialog.selectedFiles()
-            # print("Selected File:", selected_files[0])
             self.file_path_le.setText(selected_files[0])
             return selected_files[0]
     
     def open_file(self):
         try:
             usd_utils.open_file(self.file_path_le.text())
+            window = FileBrowser(self)
+            window.exec()
         except usd_utils.WrongFileFormatError as e:
             self.error_message("not supported file format!")
 
@@ -61,10 +63,13 @@ class MainWindow(QtWidgets.QMainWindow):
         dlg.setWindowTitle("I have a question!")
         dlg.setText(message)
         dlg.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+        dlg.setStandardButtons(
+            QtWidgets.QMessageBox.StandardButton.Ok
+        )
         button = dlg.exec()
 
-        # if button == QtWidgets.QMessageBox.Ok:
-        #     print("OK!")
+        if button == QtWidgets.QMessageBox.StandardButton.Ok:
+            print("OK!")
 
 
 if __name__ == "__main__":
