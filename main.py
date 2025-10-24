@@ -1,6 +1,7 @@
 import sys
 from PyQt6 import QtWidgets
 
+import usd_utils
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -24,7 +25,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def create_layout(self):
         file_layout = QtWidgets.QHBoxLayout()
         file_layout.addWidget(self.file_path_le)
-        file_layout.addStretch()
+        # file_layout.addStretch()
         file_layout.addWidget(self.file_path_btn)
 
 
@@ -33,7 +34,37 @@ class MainWindow(QtWidgets.QMainWindow):
         main_layout.addWidget(self.open_file_btn)
 
     def create_connections(self):
-        pass
+        self.file_path_btn.clicked.connect(self.open_file_dialog)
+        self.open_file_btn.clicked.connect(self.open_file)
+
+    def open_file_dialog(self):
+        file_dialog = QtWidgets.QFileDialog(self)
+        file_dialog.setWindowTitle("Open File")
+        file_dialog.setFileMode(QtWidgets.QFileDialog.FileMode.ExistingFile)
+        file_dialog.setViewMode(QtWidgets.QFileDialog.ViewMode.Detail)
+        file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptMode.AcceptOpen)
+
+        if file_dialog.exec():
+            selected_files = file_dialog.selectedFiles()
+            # print("Selected File:", selected_files[0])
+            self.file_path_le.setText(selected_files[0])
+            return selected_files[0]
+    
+    def open_file(self):
+        try:
+            usd_utils.open_file(self.file_path_le.text())
+        except usd_utils.WrongFileFormatError as e:
+            self.error_message("not supported file format!")
+
+    def error_message(self, message):
+        dlg = QtWidgets.QMessageBox(self)
+        dlg.setWindowTitle("I have a question!")
+        dlg.setText(message)
+        dlg.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+        button = dlg.exec()
+
+        # if button == QtWidgets.QMessageBox.Ok:
+        #     print("OK!")
 
 
 if __name__ == "__main__":

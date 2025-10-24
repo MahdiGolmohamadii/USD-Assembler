@@ -4,7 +4,7 @@ def Xform "hello"
 {
     def Sphere "world"
     {
-        float3[] extent = [(-12, -12, -12), (12, 12, 12)]
+        float3[] extent = [(-24, -24, -24), (24, 24, 24)]
         double radius = 2
     }
 }
