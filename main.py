@@ -52,8 +52,8 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def open_file(self):
         try:
-            usd_utils.open_file(self.file_path_le.text())
-            window = FileBrowser(self)
+            stage = usd_utils.open_file(self.file_path_le.text())
+            window = FileBrowser(parent=self,stage= stage)
             window.exec()
         except usd_utils.WrongFileFormatError as e:
             self.error_message("not supported file format!")

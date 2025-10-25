@@ -34,10 +34,12 @@ def open_file(file : str):
         print(f"Error: {e}")
         raise WrongFileFormatError
     
-    print(stage.GetPseudoRoot())
-    xform = stage.GetPrimAtPath('/hello')
-    print(xform.GetPropertyNames())
+    # print(stage.GetPseudoRoot())
+    # xform = stage.GetPrimAtPath('/hello')
+    # print(xform.GetPropertyNames())
 
-    prim = stage.GetPseudoRoot()
-    for child in prim.GetChildren():
-        print(child.GetName(), child.GetTypeName())
+    # prim = stage.GetPseudoRoot()
+    # for child in prim.GetChildren():
+    #     print(child.GetName(), child.GetTypeName())
+
+    return stage
