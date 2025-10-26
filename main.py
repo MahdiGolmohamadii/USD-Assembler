@@ -2,7 +2,7 @@ import sys
 from PyQt6 import QtWidgets
 
 import usd_utils
-from widgets.file_browser import FileBrowser
+from widgets.file_inspector import FileInspector
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -53,7 +53,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def open_file(self):
         try:
             stage = usd_utils.open_file(self.file_path_le.text())
-            window = FileBrowser(parent=self,stage= stage)
+            window = FileInspector(parent=self,stage= stage)
             window.exec()
         except usd_utils.WrongFileFormatError as e:
             self.error_message("not supported file format!")

@@ -1,11 +1,16 @@
 import sys
-from PyQt6 import QtWidgets
+from PyQt6 import QtWidgets, QtCore
+from widgets.attributes import Attributes
 
 
-class FileBrowser(QtWidgets.QDialog):
+class FileInspector(QtWidgets.QDialog):
     def __init__(self, parent, stage):
         super().__init__(parent)
         self.stage = stage
+
+        self.setMinimumSize(300,200)
+        self.setWindowTitle(self.stage.GetRootLayer().identifier)
+
         self.create_widgets()
         self.create_layout()
         self.create_connections()
@@ -13,20 +18,10 @@ class FileBrowser(QtWidgets.QDialog):
 
     def create_widgets(self):
         self.tree_widget = QtWidgets.QTreeWidget()
-        # self.tree_widget.setColumnCount(5)
-
-        # items = []
-        # for i in range(16):
-        #     items.append(QtWidgets.QTreeWidgetItem())
-
-        # child = []
-        # for i in range(3):
-        #     child.append(QtWidgets.QTreeWidgetItem(items[0]))
-        # self.tree_widget.insertTopLevelItems(0, items)
-        # self.populate_tree(self.stage)
+        self.tree_widget.setColumnCount(3)
         for p in self.stage.Traverse():
             self.populate_tree(p, self.tree_widget)
-        
+        self.tree_widget.resizeColumnToContents(0)
         
         
 
@@ -34,7 +29,7 @@ class FileBrowser(QtWidgets.QDialog):
         main_layout = QtWidgets.QVBoxLayout(self)
         main_layout.addWidget(self.tree_widget)
     def create_connections(self):
-        pass
+        self.tree_widget.itemClicked.connect(self.on_cell_clicked)
 
 
     def populate_tree(self, prim, parent_widget, parent_item=None):
@@ -43,5 +38,18 @@ class FileBrowser(QtWidgets.QDialog):
 
         for child in prim.GetChildren():
             item = QtWidgets.QTreeWidgetItem([child.GetName(), child.GetTypeName()])
+            item.setData(0, QtCore.Qt.ItemDataRole.UserRole, str(child.GetPath()))
             parent_item.addChild(item)
             self.populate_tree(child, parent_widget, item)
+
+    
+    def on_cell_clicked(self, item, column):
+        prim_path = item.data(0, QtCore.Qt.ItemDataRole.UserRole)
+        print(prim_path)
+        print(column)
+
+        if prim_path:
+            prim = self.stage.GetPrimAtPath(prim_path)
+        if prim:
+            attrib_window = Attributes(self, prim)
+            attrib_window.exec()
