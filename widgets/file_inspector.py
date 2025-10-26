@@ -45,11 +45,9 @@ class FileInspector(QtWidgets.QDialog):
     
     def on_cell_clicked(self, item, column):
         prim_path = item.data(0, QtCore.Qt.ItemDataRole.UserRole)
-        print(prim_path)
-        print(column)
 
         if prim_path:
             prim = self.stage.GetPrimAtPath(prim_path)
         if prim:
-            attrib_window = Attributes(self, prim)
-            attrib_window.exec()
+            self.attrib_window = Attributes(self, prim)
+            self.attrib_window.show()
