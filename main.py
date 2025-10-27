@@ -21,12 +21,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.main_widget)
         self.file_path_le = QtWidgets.QLineEdit()
         self.file_path_btn = QtWidgets.QPushButton('...')
+        
+        self.file_path_le.setText('/Users/mahdi/DEV/Tools/USD-Assembler/Assets/Kitchen_set.usd')
 
         self.open_file_btn = QtWidgets.QPushButton('Open')
     def create_layout(self):
         file_layout = QtWidgets.QHBoxLayout()
         file_layout.addWidget(self.file_path_le)
-        # file_layout.addStretch()
         file_layout.addWidget(self.file_path_btn)
 
 
