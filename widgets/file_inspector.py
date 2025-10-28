@@ -1,6 +1,7 @@
 import sys
 from PyQt6 import QtWidgets, QtCore
 from widgets.attributes import Attributes
+import usd_utils
 from pxr import Sdf, UsdShade
 
 
@@ -74,11 +75,16 @@ class FileInspector(QtWidgets.QDialog):
     def on_export_clicked(self):
         sel_items = self.tree_widget.selectedItems()
 
+        new_stage = usd_utils.create_new_file("assembeled.usda")
         for i, item in enumerate(sel_items):
             name = item.text(0)
             type_ = item.text(1)
             prim_path = item.data(0, QtCore.Qt.ItemDataRole.UserRole)
             print(f"{name} ({type_}) -> {prim_path}")
+            
+            # usd_utils.copy_prim(self.stage, prim_path, new_stage)
+            usd_utils.refrence_to_destination(self.stage, prim_path, new_stage)
+
 
 
     def populate_layers_tree(self, layer, parent_item=None):

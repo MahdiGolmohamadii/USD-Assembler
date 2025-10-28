@@ -5,8 +5,6 @@ class Attributes(QtWidgets.QDialog):
     def __init__(self, parent, prim):
         super().__init__(parent)
         self.prim = prim
-        
-        
 
         self.setWindowTitle(str(prim.GetPath()))
         self.create_widgets()

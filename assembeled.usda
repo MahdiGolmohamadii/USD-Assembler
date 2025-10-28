@@ -1,0 +1,41 @@
+#usda 1.0
+
+def Xform "copied"
+{
+    def Xform "Kitchen_1" (
+        prepend references = @/Users/mahdi/DEV/Tools/USD-Assembler/Assets/Kitchen_set.usd@</Kitchen_set/Arch_grp/Kitchen_1>
+    )
+    {
+    }
+
+    def Xform "Geom" (
+        prepend references = @/Users/mahdi/DEV/Tools/USD-Assembler/Assets/Kitchen_set.usd@</Kitchen_set/Arch_grp/Kitchen_1/Geom>
+    )
+    {
+    }
+
+    def Xform "Cabinets" (
+        prepend references = @/Users/mahdi/DEV/Tools/USD-Assembler/Assets/Kitchen_set.usd@</Kitchen_set/Arch_grp/Kitchen_1/Geom/Cabinets>
+    )
+    {
+    }
+
+    def Xform "Ceiling" (
+        prepend references = @/Users/mahdi/DEV/Tools/USD-Assembler/Assets/Kitchen_set.usd@</Kitchen_set/Arch_grp/Kitchen_1/Geom/Ceiling>
+    )
+    {
+    }
+
+    def Xform "Counter" (
+        prepend references = @/Users/mahdi/DEV/Tools/USD-Assembler/Assets/Kitchen_set.usd@</Kitchen_set/Arch_grp/Kitchen_1/Geom/Counter>
+    )
+    {
+    }
+
+    def Xform "CupShelf" (
+        prepend references = @/Users/mahdi/DEV/Tools/USD-Assembler/Assets/Kitchen_set.usd@</Kitchen_set/Arch_grp/Kitchen_1/Geom/CupShelf>
+    )
+    {
+    }
+}
+
